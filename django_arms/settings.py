@@ -141,6 +141,9 @@ WHITENOISE_USE_FINDERS = True
 WHITENOISE_MANIFEST_STRICT = False
 WHITENOISE_ALLOW_ALL_ORIGINS = True
 
+# Configuración para ignorar archivos .map en WhiteNoise
+WHITENOISE_SKIP_COMPRESS_EXTENSIONS = {'.map'}
+
 # Hosts permitidos
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.vercel.app', '.now.sh']
 
