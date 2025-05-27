@@ -9,10 +9,10 @@ rm -rf staticfiles/*
 # Recopilar archivos estáticos
 python3 manage.py collectstatic --noinput
 
-# Asegurar que todos los archivos estáticos estén en el directorio staticfiles
-if [ -d "static" ]; then
-    cp -r static/* staticfiles/ 2>/dev/null || true
-fi
+# Copiar archivos estáticos al directorio staticfiles
+cp -r static/assets/bootstrap staticfiles/assets/bootstrap
+cp -r static/assets/DataTables staticfiles/assets/DataTables
+cp -r static/assets/select2 staticfiles/assets/select2
 
 # Crear directorios necesarios
 mkdir -p media
