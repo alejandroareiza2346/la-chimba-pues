@@ -17,9 +17,6 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 media/
-static/assets/bootstrap/
-static/assets/DataTables/
-static/assets/select2/
 .vscode/
 *.egg-info/
 dist/
