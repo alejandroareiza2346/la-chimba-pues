@@ -43,11 +43,6 @@ ENV/
 # Vercel
 .vercel
 
-# Static files
-static/assets/bootstrap/
-static/assets/DataTables/
-static/assets/select2/
-
 # Cache
 **/__pycache__/
 *.pyc
