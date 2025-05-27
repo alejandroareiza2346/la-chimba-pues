@@ -1,20 +1,43 @@
 # Django Airlines Reservation Management System - Requirements
 # Updated for Python 3.13 compatibility
+
+# Django core
 Django>=4.2,<5.0
+
+# Imagen y QR
 Pillow==11.2.1
 qrcode==8.2
 django-qr-code==3.1.1
+segno==1.6.6
+
+# Seguridad y cifrado
 cryptography==45.0.3
-# Dependencies
-asgiref==3.8.1
-annotated-types==0.7.0
 cffi==1.17.1
 pycparser==2.22
+
+# PostgreSQL y configuración
+psycopg2-binary==2.9.10
+dj-database-url==2.1.0
+python-decouple==3.8
+
+# Tipado y utilidades
+annotated-types==0.7.0
 pydantic==2.11.5
 pydantic_core==2.33.2
-pytz==2025.2
-segno==1.6.6
-sqlparse==0.5.3
 typing_extensions==4.13.2
 typing-inspection==0.4.1
+
+# Django internals
+asgiref==3.8.1
+sqlparse==0.5.3
+pytz==2025.2
 tzdata==2025.2
+
+# Servidor (opcional pero útil para producción)
+gunicorn==21.2.0
+
+# Otros paquetes
+chardet==5.2.0
+colorama==0.4.6
+packaging==25.0
+reportlab==4.4.1
