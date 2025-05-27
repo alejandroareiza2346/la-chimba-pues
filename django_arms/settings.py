@@ -131,8 +131,10 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Whitenoise settings
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+WHITENOISE_USE_FINDERS = True
 WHITENOISE_MAX_AGE = 31536000  # 1 year in seconds
+WHITENOISE_COMPRESS = True
 
 # Media files
 MEDIA_URL = '/media/'
