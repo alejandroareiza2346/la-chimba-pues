@@ -1,19 +1,19 @@
 #!/bin/bash
 
-# Install Python dependencies
+# Instalar dependencias de Python
 python3 -m pip install -r requirements.txt
 
-# Clear existing staticfiles
+# Limpiar archivos estáticos existentes
 rm -rf staticfiles/*
 
-# Collect static files
+# Recopilar archivos estáticos
 python3 manage.py collectstatic --noinput
 
-# Ensure all static files are in staticfiles directory
+# Asegurar que todos los archivos estáticos estén en el directorio staticfiles
 if [ -d "static" ]; then
     cp -r static/* staticfiles/ 2>/dev/null || true
 fi
 
-# Create necessary directories
+# Crear directorios necesarios
 mkdir -p media
 mkdir -p staticfiles
