@@ -3,11 +3,14 @@ from django.shortcuts import redirect, render
 import json
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse
 from armsApp import models, forms
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+import io
 
 
 
@@ -430,13 +433,16 @@ def list_reservation(request):
 
 @login_required
 def view_reservation(request, pk = None):
-    if pk is None:
-        reservation = {}
-    else:
-        reservation = models.Reservation.objects.get(id = pk)
+    reservation = models.Reservation.objects.filter(id=pk).first()
+    if reservation is None:
+        messages.error(request, "Reservation not found")
+        return redirect('list-reservation')
     context = context_data()
     context['page_title'] ="Reservation Details"
     context['reservation'] = reservation
+    if reservation:
+        pdf_url = request.build_absolute_uri(f"/pago_pdf/{reservation.pk}/")
+        context['pdf_url'] = pdf_url
     return render(request, 'view_reservation_details.html', context) 
 
 @login_required
@@ -466,3 +472,33 @@ def update_reservation(request):
         except:
             resp['msg'] = 'Reservation Status has failed to update'
     return HttpResponse(json.dumps(resp), content_type="application/json")
+
+@login_required
+def pago_pdf(request, reservation_id):
+    try:
+        reservation = models.Reservation.objects.get(id=reservation_id)
+    except models.Reservation.DoesNotExist:
+        return HttpResponse("Reservation not found", status=404)
+    buffer = io.BytesIO()
+    p = canvas.Canvas(buffer, pagesize=letter)
+    _, height = letter
+    p.setFont("Helvetica-Bold", 16)
+    p.drawString(100, height - 50, "Colilla de Pago - Reserva de Vuelo")
+    p.setFont("Helvetica", 12)
+    y = height - 100
+    p.drawString(100, y, f"ID de Reserva: {reservation_id}")
+    y -= 20
+    p.drawString(100, y, f"Pasajero: {reservation.name}")
+    y -= 20
+    p.drawString(100, y, f"Vuelo: {reservation.flight.code}")
+    y -= 20
+    p.drawString(100, y, f"Clase: {'Business Class' if reservation.type == '1' else 'Economy'}")
+    y -= 20
+    p.drawString(100, y, f"Estado: {'Pendiente' if reservation.status == '0' else 'Confirmado' if reservation.status == '1' else 'Cancelado'}")
+    y -= 40
+    p.setFont("Helvetica-Bold", 12)
+    p.drawString(100, y, "Por favor pague el valor correspondiente en el banco autorizado.")
+    p.showPage()
+    p.save()
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename=f"colilla_pago_reserva_{reservation_id}.pdf")

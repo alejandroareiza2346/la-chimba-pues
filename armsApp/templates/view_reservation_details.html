@@ -99,9 +99,9 @@
                 <div class="col-lg-4 col-md-6 col-sm-12 text-center">
                     <div class="card border-primary">
                         <div class="card-body">                            <h6 class="card-title text-primary">Boarding Pass QR</h6>
-                            {% qr_url_from_text reservation.id size=8 version=1 image_format='png' %}
-                            <p class="small text-muted mt-2">Scan at boarding gate</p>
-                        </div>
+    {% qr_from_text pdf_url size=8 image_format="png" %}
+    <p class="small text-muted mt-2">Escanea para descargar la colilla de pago en PDF</p>
+</div>
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-6 col-sm-12">
