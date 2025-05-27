@@ -35,7 +35,7 @@ tzdata==2025.2
 
 # Servidor y archivos estáticos
 gunicorn==21.2.0
-whitenoise==6.6.0
+whitenoise==6.9.0
 
 # Otros paquetes
 chardet==5.2.0
